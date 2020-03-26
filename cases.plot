@@ -1,5 +1,5 @@
 # shamelessly stolen from my Magnet Research project
-set title "Cases in Travis County"
+set title "Cases in Austin/Travis County"
 set xlabel "Date"
 set ylabel "Cases"
 set grid
