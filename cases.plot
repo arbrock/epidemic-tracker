@@ -8,13 +8,14 @@ set grid
 set datafile separator ","
 set xdata time
 set timefmt "%Y%m%d"
-set xrange ["20200315":"20200413"]
+set xrange ["20200315":"20200508"]
 
 #dump to png
-set terminal png size 640,480
+set terminal png size 1024,768
 set output 'cases.png'
 set format x "%Y-%m-%d"
 set nokey
+set logscale y 10
 
 #actually plot
 plot 'cases.csv' using 1:2 with linespoints
