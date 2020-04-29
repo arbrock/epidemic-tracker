@@ -25,5 +25,6 @@ plot 'cases.csv' using 1:2 title "Cumulative" with linespoints,\
 
 unset logscale y
 set nokey
-set title "Immediate Unsmoothed R"
-plot 'cases_interpolated.csv' using 1:4 title "Immediate R" with linespoints
+set title "R-value"
+plot 'cases_interpolated.csv' using 1:4 title "Immediate R" with linespoints,\
+     'cases_interpolated.csv' using 1:5 title "Smoothed R" with lines
