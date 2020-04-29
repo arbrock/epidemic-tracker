@@ -8,14 +8,22 @@ set grid
 set datafile separator ","
 set xdata time
 set timefmt "%Y%m%d"
+
+# set up X axis
 set xrange ["20200315":"20200508"]
+set format x "%Y-%m-%d"
 
 #dump to png
 set terminal png size 1024,768
 set output 'cases.png'
-set format x "%Y-%m-%d"
-set nokey
-set logscale y 10
 
+set multiplot layout 2,1
 #actually plot
-plot 'cases.csv' using 1:2 with linespoints
+set logscale y 10
+plot 'cases.csv' using 1:2 title "Cumulative" with linespoints,\
+     'cases_interpolated.csv' using 1:3 title "New" with linespoints
+
+unset logscale y
+set nokey
+set title "Immediate Unsmoothed R"
+plot 'cases_interpolated.csv' using 1:4 title "Immediate R" with linespoints
