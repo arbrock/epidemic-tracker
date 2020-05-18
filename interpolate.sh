@@ -2,8 +2,8 @@
 awk -F, '
 BEGIN {
   oldcases=-1;
-  WINSIZE=5
-  BASISINTERVAL=7
+  WINSIZE=7
+  BASISINTERVAL=14
   for(i = 0; i<WINSIZE; i++) {
     means[i] = -1;
   }
