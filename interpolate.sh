@@ -6,6 +6,7 @@ BEGIN {
   BASISINTERVAL=14
   for(i = 0; i<WINSIZE; i++) {
     means[i] = -1;
+    ariths[i] = -1;
   }
   for(i = 0; i<BASISINTERVAL; i++) {
     basis[i] = -1;
@@ -28,17 +29,25 @@ BEGIN {
     basissum += basis[0];
     geom=arith/basissum*BASISINTERVAL;
     smoothsum = 0;
+    arithssum = 0;
     for(i=WINSIZE-1; i>0; i--) {
       means[i] = means[i-1];
       if(means[i] > 0) {
         smoothsum += log(means[i]);
       }
+      ariths[i] = ariths[i-1];
+      if(ariths[i] > 0) {
+        arithssum += ariths[i];
+      }
     }
     means[0] = geom;
     smoothsum += log(means[0]);
+    ariths[0] = arith;
+    arithssum += ariths[0];
     if(means[WINSIZE-1] >= 0) {
       smoothed = exp(smoothsum/WINSIZE);
-      print date","cases","arith","geom","smoothed;
+      arithsmoothed = arithssum/WINSIZE;
+      print date","cases","arith","arithsmoothed","geom","smoothed;
     } else if(basis[BASISINTERVAL-1] >= 0) {
       print date","cases","arith","geom;
     } else {

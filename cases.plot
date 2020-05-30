@@ -21,10 +21,11 @@ set multiplot layout 2,1
 #actually plot
 set logscale y 10
 plot 'cases.csv' using 1:2 title "Cumulative" with linespoints,\
-     'cases_interpolated.csv' using 1:3 title "New" with linespoints
+     'cases_interpolated.csv' using 1:3 title "New" with linespoints,\
+     'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
 
 unset logscale y
 set nokey
 set title "R-value"
-plot 'cases_interpolated.csv' using 1:4 title "Immediate R" with linespoints,\
-     'cases_interpolated.csv' using 1:5 title "Smoothed R" with lines
+plot 'cases_interpolated.csv' using 1:5 title "Immediate R" with linespoints,\
+     'cases_interpolated.csv' using 1:6 title "Smoothed R" with lines
