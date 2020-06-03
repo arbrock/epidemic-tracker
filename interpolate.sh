@@ -44,7 +44,7 @@ BEGIN {
     smoothsum += log(means[0]);
     ariths[0] = arith;
     arithssum += ariths[0];
-    if(means[WINSIZE-1] >= 0) {
+    if(means[WINSIZE-1] >= 0 && basis[BASISINTERVAL-1] >= 0) {
       smoothed = exp(smoothsum/WINSIZE);
       arithsmoothed = arithssum/WINSIZE;
       print date","cases","arith","arithsmoothed","geom","smoothed;
