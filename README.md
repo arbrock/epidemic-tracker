@@ -9,3 +9,5 @@ numbers, so I needed to log those myself.)
 
 The data is in cases.csv and is checked in not because it's good practice but because it would be
 hard to replace if I deleted it, since there's no automatic scraping going on here.
+
+I host a copy of the output [here](https://arbrock.nfshost.com/cases.png).
