@@ -28,7 +28,7 @@ BEGIN {
         livedays++;
       }
     }
-    basis[0] = arith;
+    basis[0] = arith; livedays++;
     basissum += basis[0];
     geom=arith/basissum*livedays;
     smoothsum = 0;
