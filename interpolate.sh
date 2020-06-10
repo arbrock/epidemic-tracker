@@ -19,15 +19,18 @@ BEGIN {
   if(oldcases >= 0) {
     arith=cases-oldcases;
     basissum=0;
+    # during startup, only multiply by the number of days which we actually look at
+    livedays=0;
     for(i=BASISINTERVAL-1; i>0; i--) {
       basis[i] = basis[i-1];
-      if(basis[i] > 0) {
+      if(basis[i] >= 0) {
         basissum += basis[i];
+        livedays++;
       }
     }
     basis[0] = arith;
     basissum += basis[0];
-    geom=arith/basissum*BASISINTERVAL;
+    geom=arith/basissum*livedays;
     smoothsum = 0;
     arithssum = 0;
     for(i=WINSIZE-1; i>0; i--) {
@@ -44,17 +47,14 @@ BEGIN {
     smoothsum += log(means[0]);
     ariths[0] = arith;
     arithssum += ariths[0];
-    if(means[WINSIZE-1] >= 0 && basis[BASISINTERVAL-1] >= 0) {
+    if(ariths[WINSIZE-1] >= 0 && means[WINSIZE-1] >= 0) {
       smoothed = exp(smoothsum/WINSIZE);
       arithsmoothed = arithssum/WINSIZE;
       print date","cases","arith","arithsmoothed","geom","smoothed;
-    } else if(basis[BASISINTERVAL-1] >= 0) {
-      print date","cases","arith",,"geom;
-    } else if(means[WINSIZE-1] >= 0) {
-      arithsmoothed = arithssum/WINSIZE;
-      print date","cases","arith","arithsmoothed
-    } else {
+    } else if(basissum == 0) {
       print date","cases","arith;
+    } else {
+      print date","cases","arith",,"geom;
     }
   }
   oldcases=cases;
