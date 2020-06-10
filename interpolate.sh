@@ -49,7 +49,10 @@ BEGIN {
       arithsmoothed = arithssum/WINSIZE;
       print date","cases","arith","arithsmoothed","geom","smoothed;
     } else if(basis[BASISINTERVAL-1] >= 0) {
-      print date","cases","arith","geom;
+      print date","cases","arith",,"geom;
+    } else if(means[WINSIZE-1] >= 0) {
+      arithsmoothed = arithssum/WINSIZE;
+      print date","cases","arith","arithsmoothed
     } else {
       print date","cases","arith;
     }
