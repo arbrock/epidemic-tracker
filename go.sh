@@ -5,4 +5,4 @@ if [ ! -z "$1" ] ; then
 fi
 ./interpolate.sh
 gnuplot cases.plot
-scp cases.png www:
+scp cases.png cases-wide.png www:
