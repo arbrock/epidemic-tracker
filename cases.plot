@@ -21,8 +21,8 @@ set multiplot layout 2,1
 #actually plot
 set logscale y 10
 set key bottom right
-plot 'cases.csv' using 1:2 title "Cumulative" with linespoints,\
-     'cases_interpolated.csv' using 1:3 title "New" with linespoints,\
+plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
+     'cases_interpolated.csv' using 1:3 title "New" with points,\
      'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
 
 unset logscale y
@@ -41,8 +41,8 @@ set multiplot layout 2,1
 set logscale y 10
 set key bottom right
 set ylabel "Cases"
-plot 'cases.csv' using 1:2 title "Cumulative" with linespoints,\
-     'cases_interpolated.csv' using 1:3 title "New" with linespoints,\
+plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
+     'cases_interpolated.csv' using 1:3 title "New" with points,\
      'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
 
 unset logscale y
