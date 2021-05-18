@@ -10,7 +10,7 @@ set xdata time
 set timefmt "%Y%m%d"
 
 # set up X axis
-set xrange ["20201201":"20210301"]
+set xrange ["20210301":"20210801"]
 set format x "%Y-%m-%d"
 
 #dump to png
@@ -20,7 +20,7 @@ set output 'cases.png'
 set multiplot layout 2,1
 #actually plot
 set logscale y 10
-set key bottom right
+set key top right
 plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
      'cases_interpolated.csv' using 1:3 title "New" with points,\
      'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
@@ -35,11 +35,11 @@ plot 'cases_interpolated.csv' using 1:5 title "Immediate R" with linespoints,\
 # do wide view
 unset multiplot
 set output 'cases-wide.png'
-set xrange ["20200317":"20210301"]
+set xrange ["20200317":"20210801"]
 set multiplot layout 2,1
 
 set logscale y 10
-set key bottom right
+set key top right
 set ylabel "Cases"
 plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
      'cases_interpolated.csv' using 1:3 title "New" with points,\
