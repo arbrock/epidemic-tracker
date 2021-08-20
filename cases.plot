@@ -1,7 +1,6 @@
 # shamelessly stolen from my Magnet Research project
 set title "Cases in Austin/Travis County"
 set xlabel "Date"
-set ylabel "Cases"
 set grid
 
 # set up input file
@@ -21,6 +20,7 @@ set multiplot layout 2,1
 #actually plot
 set logscale y 10
 set key top right
+set title "Cases"
 plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
      'cases_interpolated.csv' using 1:3 title "New" with points,\
      'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
@@ -40,7 +40,7 @@ set multiplot layout 2,1
 
 set logscale y 10
 set key top right
-set ylabel "Cases"
+set title "Cases"
 plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
      'cases_interpolated.csv' using 1:3 title "New" with points,\
      'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
