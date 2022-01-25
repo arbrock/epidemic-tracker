@@ -22,15 +22,15 @@ set logscale y 10
 set key top right
 set title "Cases"
 plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
-     'cases_interpolated.csv' using 1:3 title "New" with points,\
-     'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
+     'interpolated.csv' using 1:3 title "New" with points,\
+     'interpolated.csv' using 1:4 title "Smoothed New" with lines
 
 unset logscale y
 set nokey
 set title "R-value"
 unset ylabel
-plot 'cases_interpolated.csv' using 1:5 title "Immediate R" with linespoints,\
-     'cases_interpolated.csv' using 1:6 title "Smoothed R" with lines
+plot 'interpolated.csv' using 1:5 title "Immediate R" with linespoints,\
+     'interpolated.csv' using 1:6 title "Smoothed R" with lines
 
 # do wide view
 unset multiplot
@@ -42,12 +42,12 @@ set logscale y 10
 set key top right
 set title "Cases"
 plot 'cases.csv' using 1:2 title "Cumulative" with lines,\
-     'cases_interpolated.csv' using 1:3 title "New" with points,\
-     'cases_interpolated.csv' using 1:4 title "Smoothed New" with lines
+     'interpolated.csv' using 1:3 title "New" with points,\
+     'interpolated.csv' using 1:4 title "Smoothed New" with lines
 
 unset logscale y
 set nokey
 set title "R-value"
 unset ylabel
-plot 'cases_interpolated.csv' using 1:5 title "Immediate R" with linespoints,\
-     'cases_interpolated.csv' using 1:6 title "Smoothed R" with lines
+plot 'interpolated.csv' using 1:5 title "Immediate R" with linespoints,\
+     'interpolated.csv' using 1:6 title "Smoothed R" with lines
