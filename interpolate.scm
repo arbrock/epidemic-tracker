@@ -35,7 +35,7 @@
     (if (= sum 0)
       0
       (* (/ new sum) count))
-    (geom window (+ 1 count) new (+ (list-ref (car old) 1) sum) (cdr old))))
+    (geom window (+ 1 count) new (+ (list-ref (car old) 2) sum) (cdr old))))
 
 (define (process/r data prev)
   (if (null? data)
@@ -46,23 +46,17 @@
           (yesterday (if (null? prev) 0 (list-ref (car prev) 1)))
           ; arith: new cases
           (arith (- today yesterday))
+          ; arithsmoothed: running 7-day window average 
+          (arithsmoothed (arithsmooth 7 arith prev))
           ; geom: normalized fraction of new cases in last 14 days that happened today
           ; the original awk code is as follows:
           ; geom=arith/basissum*livedays;
-          (geom (geom 14 0 arith 0 prev))
-          )
+          (geom (geom 14 1 arith arith prev))
+          ; geomsmoothed: smooth geom over 7-day window
+          (geomsmoothed (geomsmooth 7 geom prev)))
     (process/r
       (cdr data)
-      (cons
-        (list date
-          today
-          arith
-          ; arithsmoothed: running 7-day window average 
-          (arithsmooth 7 (- today yesterday) prev)
-          geom
-          ; geomsmoothed: smooth geom over 7-day window
-          (geomsmooth 7 geom prev)
-) prev)))))
+      (cons (list date today arith arithsmoothed geom geomsmoothed) prev)))))
 
 (define (process data)
   (reverse (process/r data '())))
@@ -70,11 +64,11 @@
 (define (format-record record)
   (string-join (list
     (date->string (list-ref record 0) "~Y~m~d")
-    (number->string (list-ref record 1) 10)
+    (number->string (list-ref record 1))
     (number->string (list-ref record 2))
-    (number->string (list-ref record 3))
-    (number->string (list-ref record 4))
-    (number->string (list-ref record 5) 10)
+    (number->string (exact->inexact (list-ref record 3)))
+    (number->string (exact->inexact (list-ref record 4)))
+    (number->string (exact->inexact (list-ref record 5)))
     )
   ","))
 
