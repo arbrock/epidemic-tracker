@@ -19,16 +19,21 @@
 (define (interpolate data)
   data)
 
-(define (smooth window count sum old index)
+(define (arithsmooth/r window count sum old)
   (if (or (null? old) (= count window))
     (/ sum count)
-    (smooth window (+ 1 count) (+ (list-ref (car old) index) sum) (cdr old) index)))
+    (arithsmooth/r window (+ 1 count) (+ (list-ref (car old) 2) sum) (cdr old))))
 
 (define (arithsmooth window new-entry old)
-  (smooth window 1 new-entry old 2))
+  (arithsmooth/r window 1 new-entry old))
+
+(define (geomsmooth/r window count sum old)
+  (if (or (null? old) (= count window))
+    (exp (/ sum count))
+    (geomsmooth/r window (+ 1 count) (+ (log (list-ref (car old) 4)) sum) (cdr old))))
 
 (define (geomsmooth window new-entry old)
-  (smooth window 1 new-entry old 4))
+  (geomsmooth/r window 1 (log new-entry) old))
 
 (define (geom window count new sum old)
   (if (or (null? old) (= count window))
