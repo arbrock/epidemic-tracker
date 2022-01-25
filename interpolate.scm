@@ -16,8 +16,33 @@
       (reverse prev)
       (read-raw-csv port (cons (split-raw-rec line) prev)))))
 
+(define (interpolate/r data rest)
+  (if (null? data)
+    (reverse rest)
+    (if (null? rest) (interpolate/r (cdr data) (cons (car data) rest))
+    (let* ((today (car data))
+           (yesterday (car rest))
+           (time-today (date->time-utc (list-ref today 0)))
+           (time-yesterday (date->time-utc (list-ref yesterday 0)))
+           (one-day (make-time 'time-duration 0 86400))
+           (one-dst-day (make-time 'time-duration 0 (+ 86400 3600)))
+           (next-day (add-duration time-yesterday one-day))
+           (next-dst-day (add-duration time-yesterday one-dst-day)))
+          (if (<= (time-second time-today) (time-second next-dst-day))
+            ; no interpolation
+            (interpolate/r (cdr data) (cons (car data) rest))
+            ; yes interpolation
+            (let* ((cases-today (list-ref today 1))
+                   (cases-yesterday (list-ref yesterday 1))
+                   (diff (time-difference time-today time-yesterday))
+                   (diff-days (/ (time-second diff) 86400))
+                   (interpolated-cases (round (+ cases-yesterday (/ (- cases-today cases-yesterday) diff-days))))
+                   (fake-today (list (time-utc->date next-day) interpolated-cases)))
+            (interpolate/r data (cons fake-today rest))))))))
+
+
 (define (interpolate data)
-  data)
+  (interpolate/r data '()))
 
 (define (arithsmooth/r window count sum old)
   (if (or (null? old) (= count window))
