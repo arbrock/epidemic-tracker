@@ -9,7 +9,7 @@ set xdata time
 set timefmt "%Y%m%d"
 
 # set up X axis
-set xrange ["20211101":"20220401"]
+set xrange ["20220101":"20220501"]
 set format x "%Y-%m-%d"
 
 #dump to png
