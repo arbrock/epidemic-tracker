@@ -12,4 +12,6 @@ antigen=$(jq .features[0].attributes.Antigen $json)
 total=$(jq .features[0].attributes.TotalCases $json)
 rm $json
 
-echo "$date_csv,$pcr,$antigen=$total" >> cases.csv
+if [ "$pcr" != "null" ] ; then
+  echo "$date_csv,$pcr,$antigen=$total" >> cases.csv
+fi
