@@ -52,13 +52,16 @@
 (define (arithsmooth window new-entry old)
   (arithsmooth/r window 1 new-entry old))
 
+(define (glog a)
+  (if (= a 0) 0 (log a)))
+
 (define (geomsmooth/r window count sum old)
   (if (or (null? old) (= count window))
     (exp (/ sum count))
-    (geomsmooth/r window (+ 1 count) (+ (log (list-ref (car old) 4)) sum) (cdr old))))
+    (geomsmooth/r window (+ 1 count) (+ (glog (list-ref (car old) 4)) sum) (cdr old))))
 
 (define (geomsmooth window new-entry old)
-  (geomsmooth/r window 1 (log new-entry) old))
+  (geomsmooth/r window 1 (glog new-entry) old))
 
 (define (geom window count new sum old)
   (if (or (null? old) (= count window))
